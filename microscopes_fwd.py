@@ -131,6 +131,21 @@ class Microscope(object):
 
         return ImgWave
 
+    def BackPropagateWave(self, ObjWave, qq, del_px):
+        #This function will propagate the object wave function to the image plane
+        #by convolving with the transfer function of microscope and returns the 
+        #complex real-space ImgWave
+
+        #get the transfer function
+        tf = self.getTransferFunction(qq, del_px)
+        
+        #Compute Fourier transform of ObjWave and convolve with tf
+        f_ObjWave = np.fft.fftshift(np.fft.fftn(ObjWave))
+        f_ImgWave = f_ObjWave * np.conj(tf)
+        ImgWave = np.fft.ifftn(np.fft.ifftshift(f_ImgWave))
+
+        return ImgWave
+    
     def getImage(self, ObjWave, qq, del_px):
         #This function will produce the image at the set defocus using the 
         #methods in this class.
