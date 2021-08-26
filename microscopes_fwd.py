@@ -276,4 +276,3 @@ def Plot_ColorMap(Bx = np.random.rand(256,256), By = np.random.rand(256,256), \
     return rgb_image
 
 
-
